@@ -1,0 +1,114 @@
+<div mat-dialog-title>
+  <h1>Employee Form</h1>
+</div>
+
+<form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="please enter a valid First name"
+          formControlName="firstName"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="please enter a valid last name"
+          formControlName="lastName"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="please enter a valid email"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date of Birth</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dateofbirth"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-radio-group aria-label="Select an option" formControlName="gender">
+        <mat-label><b>Gender</b> </mat-label>
+
+        <mat-radio-button value="male">Male </mat-radio-button>
+        <mat-radio-button value="female">Female </mat-radio-button>
+        <mat-radio-button value="others">Other</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Education</mat-label>
+        <mat-select formControlName="education">
+          @for (edu of educations; track edu) {
+          <mat-option [value]="edu.value">{{ edu.viewValue }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Company Name</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="please enter a valid comapny name"
+          formControlName="companyName"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Working Experience</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="please enter a valid Working Experience"
+          formControlName="workingExperience"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Current Package</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="please enter a valid current package"
+          formControlName="currentPackage"
+        />
+        <mat-hint>Indian Rupee "₹" </mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </div>
+</form>
