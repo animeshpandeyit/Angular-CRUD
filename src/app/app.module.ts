@@ -14,7 +14,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,10 +24,13 @@ import {
   MatSnackBarActions,
   MatSnackBarLabel,
 } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [AppComponent, EmpAddEditComponent],
   imports: [
     BrowserModule,
+    MatPaginator,
+    MatPaginatorModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
@@ -48,6 +51,7 @@ import {
     MatSnackBarLabel,
     MatSnackBarActions,
     MatSnackBarAction,
+    MatTableModule
   ],
   providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],

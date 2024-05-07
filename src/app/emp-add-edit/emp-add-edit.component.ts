@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EmployeeService } from '../service/employee.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { inject } from '@angular/core/testing';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
 interface education {
   value: string;
   viewValue: string;
@@ -25,7 +27,8 @@ export class EmpAddEditComponent implements OnInit {
     private _fb: FormBuilder,
     private _employeeService: EmployeeService,
     private _dialogRef: MatDialogRef<EmpAddEditComponent>,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.empForm = this._fb.group({
       firstName: '',
@@ -40,20 +43,37 @@ export class EmpAddEditComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.empForm.patchValue(this.data);
+  }
 
   onSubmit() {
     if (this.empForm.valid) {
-      this._employeeService.addEmployee(this.empForm.value).subscribe(
-        (res) => {
-          console.log(res);
-          this._dialogRef.close();
-          this.openSnackBar(`Data added successfully`, 'Close');
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      if (this.data) {
+        this._employeeService
+          .updateEmployeeData(this.data.id, this.empForm.value)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this._dialogRef.close(true);
+              this.openSnackBar(`Data updated successfully`, 'Close');
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+      } else {
+        this._employeeService.addEmployee(this.empForm.value).subscribe(
+          (res) => {
+            console.log(res);
+            this._dialogRef.close(true);
+            this.openSnackBar(`Data added successfully`, 'Close');
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      }
     }
   }
 
